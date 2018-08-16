@@ -1,0 +1,29 @@
+﻿@model WebApplication.Models.EditUserViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<h2>Edit</h2>
+@using (Html.BeginForm("Update", "User")) {
+    <div class="row">
+        <div class="col-md-3">
+            FirstName
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.FirstName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            FamilyName
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.FamilyName)
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.Id)
+    <input type="submit" class="btn btn-primary" value="Confirm" />
+}

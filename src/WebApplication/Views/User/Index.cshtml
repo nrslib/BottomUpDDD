@@ -1,0 +1,39 @@
+﻿@model System.Collections.Generic.IEnumerable<WebApplication.Models.UserSummaryViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Index</h2>
+<div class="row">
+    @Html.ActionLink(
+        "New User",
+        "NewUser",
+        "User",
+        new {},
+        new {@class = "btn btn-primary" }
+        )
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FirstName</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var summary in Model) {
+            <tr>
+                <td>@summary.Id</td>
+                <td>@summary.FirstName</td>
+                <td>@Html.ActionLink("Detail", "Detail", "User", new { id = summary.Id }, new { @class = "btn btn-default" })</td>
+                <td>@Html.ActionLink("Delete", "Delete", "User", new { id = summary.Id }, new { @class = "btn btn-default" })</td>
+            </tr>
+        }
+        </tbody>
+    </table>    
+</div>

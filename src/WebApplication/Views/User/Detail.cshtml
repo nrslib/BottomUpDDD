@@ -1,0 +1,40 @@
+﻿@model WebApplication.Models.UserDetailViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Detail</h2>
+<div class="row">
+    <div class="col-md-3">
+        ID
+    </div>
+    <div class="col-md-3">
+        @Model.Id
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        FirstName
+    </div>
+    <div class="col-md-3">
+        @Model.FirstName
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        FamilyName
+    </div>
+    <div class="col-md-3">
+        @Model.FamilyName
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        @Html.ActionLink("Edit", "Edit", "User", new { id = Model.Id }, new { @class = "btn btn-primary" } )
+    </div>
+    <div class="col-md-3">
+        @Html.ActionLink("Back", "Index", "User", new { }, new { @class = "btn btn-default" } )
+    </div>
+</div>
