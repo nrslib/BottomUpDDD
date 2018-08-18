@@ -4,10 +4,10 @@ namespace Domain.Application.Models {
     public class UserSummaryModel{
         public UserSummaryModel(User source) {
             Id = source.Id.Value;
-            FirstName = source.Name.FirstName;
+            UserName = source.UserName.Value;
         }
 
         public string Id { get; }
-        public string FirstName { get; }
+        public string UserName { get; }
     }
 }

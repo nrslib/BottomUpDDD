@@ -7,7 +7,7 @@
         }
 
         public bool IsDuplicated(User user) {
-            var name = user.Name;
+            var name = user.UserName;
             var searched = userRepository.Find(name);
 
             return searched != null;

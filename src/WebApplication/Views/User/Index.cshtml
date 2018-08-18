@@ -20,7 +20,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>FirstName</th>
+                <th>UserName</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -29,7 +29,7 @@
         @foreach (var summary in Model) {
             <tr>
                 <td>@summary.Id</td>
-                <td>@summary.FirstName</td>
+                <td>@summary.UserName</td>
                 <td>@Html.ActionLink("Detail", "Detail", "User", new { id = summary.Id }, new { @class = "btn btn-default" })</td>
                 <td>@Html.ActionLink("Delete", "Delete", "User", new { id = summary.Id }, new { @class = "btn btn-default" })</td>
             </tr>

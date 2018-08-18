@@ -10,6 +10,14 @@
 @using (Html.BeginForm("Update", "User")) {
     <div class="row">
         <div class="col-md-3">
+            UserName
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.UserName)
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-3">
             FirstName
         </div>
         <div class="col-md-3">

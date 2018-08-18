@@ -16,7 +16,7 @@ namespace WebApplication.Controllers
             var users = userService.GetUserList();
             var summaries = users.Select(x => new UserSummaryViewModel {
                 Id = x.Id,
-                FirstName = x.FirstName
+                UserName = x.UserName
             });
 
             return View(summaries);
@@ -28,9 +28,10 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         public IActionResult Register(RegisterUserViewModel model) {
+            var username = model.UserName;
             var firstname = model.FirstName;
             var familyname = model.FamilyName;
-            userService.RegisterUser(firstname, familyname);
+            userService.RegisterUser(username, firstname, familyname);
             return Redirect("Index");
         }
 
@@ -38,6 +39,7 @@ namespace WebApplication.Controllers
             var user = userService.GetUserInfo(id);
             var model = new UserDetailViewModel {
                 Id = user.Id,
+                UserName = user.UserName,
                 FirstName = user.Name.FirstName,
                 FamilyName = user.Name.FamilyName,
             };
@@ -54,6 +56,7 @@ namespace WebApplication.Controllers
             var user = userService.GetUserInfo(id);
             var model = new UserDetailViewModel {
                 Id = user.Id,
+                UserName = user.UserName,
                 FirstName = user.Name.FirstName,
                 FamilyName = user.Name.FamilyName,
             };
@@ -64,6 +67,7 @@ namespace WebApplication.Controllers
             var target = userService.GetUserInfo(id);
             var model = new EditUserViewModel {
                 Id = target.Id,
+                UserName = target.UserName,
                 FirstName = target.Name.FirstName,
                 FamilyName = target.Name.FamilyName,
             };
@@ -72,7 +76,7 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         public IActionResult Update(EditUserViewModel model) {
-            userService.ChangeUserInfo(model.Id, model.FirstName, model.FamilyName);
+            userService.ChangeUserInfo(model.Id, model.UserName, model.FirstName, model.FamilyName);
             return Redirect("Detail/" + model.Id);
         }
     }

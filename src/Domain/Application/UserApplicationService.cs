@@ -15,9 +15,11 @@ namespace Domain.Application
             userService = new UserService(userRepository);
         }
 
-        public void RegisterUser(string firstname, string familyname) {
-            var username = new FullName(firstname, familyname);
-            var user = new User(username);
+        public void RegisterUser(string username, string firstname, string familyname) {
+            var user = new User(
+                new UserName(username),
+                new FullName(firstname, familyname)
+            );
             if (userService.IsDuplicated(user)) {
                 throw new Exception("重複しています");
             } else {
@@ -25,12 +27,14 @@ namespace Domain.Application
             }
         }
 
-        public void ChangeUserInfo(string id, string firstname, string familyname) {
+        public void ChangeUserInfo(string id, string username, string firstname, string familyname) {
             var targetId = new UserId(id);
-            var target = userRepository.Find(targetId); // interface に定義（下部に記載）
+            var target = userRepository.Find(targetId);
             if (target == null) {
                 throw new Exception("not found. target id:" + id);
             }
+            var newUserName = new UserName(username);
+            target.ChangeUserName(newUserName);
             var newName = new FullName(firstname, familyname);
             target.ChangeName(newName);
             userRepository.Save(target);

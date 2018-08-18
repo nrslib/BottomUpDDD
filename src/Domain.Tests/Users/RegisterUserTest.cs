@@ -10,12 +10,13 @@ namespace Domain.Tests.Users {
         [TestMethod]
         public void TestDuplicateFail() {
             var repository = new InMemoryUserRepository();
-            var name = new FullName("taro", "tanaka");
-            repository.Save(new User(name));
+            var username = new UserName("ttaro");
+            var fullname = new FullName("taro", "tanaka");
+            repository.Save(new User(username, fullname));
             var app = new UserApplicationService(repository);
             bool isOk = false;
             try {
-                app.RegisterUser("taro", "tanaka");
+                app.RegisterUser("ttaro", "taro", "tanaka");
             } catch (Exception e) {
                 if (e.Message.StartsWith("重複")) {
                     isOk = true;
@@ -28,7 +29,7 @@ namespace Domain.Tests.Users {
         public void TestRegister() {
             var repository = new InMemoryUserRepository();
             var app = new UserApplicationService(repository);
-            app.RegisterUser("taro", "tanaka");
+            app.RegisterUser("ttaro", "taro", "tanaka");
         }
     }
 }

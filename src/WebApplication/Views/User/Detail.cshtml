@@ -16,6 +16,14 @@
 </div>
 <div class="row">
     <div class="col-md-3">
+        UserName
+    </div>
+    <div class="col-md-3">
+        @Model.UserName
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
         FirstName
     </div>
     <div class="col-md-3">
@@ -32,9 +40,9 @@
 </div>
 <div class="row">
     <div class="col-md-3">
-        @Html.ActionLink("Edit", "Edit", "User", new { id = Model.Id }, new { @class = "btn btn-primary" } )
+        @Html.ActionLink("Edit", "Edit", "User", new { id = Model.Id }, new { @class = "btn btn-primary" })
     </div>
     <div class="col-md-3">
-        @Html.ActionLink("Back", "Index", "User", new { }, new { @class = "btn btn-default" } )
+        @Html.ActionLink("Back", "Index", "User", new { }, new { @class = "btn btn-default" })
     </div>
 </div>

@@ -12,10 +12,14 @@ namespace ProductInfrastructure {
                     com.Parameters.Add(new SqlParameter("@id", id.Value));
                     var reader = com.ExecuteReader();
                     if (reader.Read()) {
+                        var username = reader["username"] as string;
                         var firstname = reader["firstname"] as string;
                         var familyname = reader["familyname"] as string;
-                        var name = new FullName(firstname, familyname);
-                        return new User(id, name);
+                        return new User(
+                            id,
+                            new UserName(username),
+                            new FullName(firstname, familyname)
+                        );
                     } else {
                         return null;
                     }
@@ -23,18 +27,23 @@ namespace ProductInfrastructure {
             }
         }
 
-        public User Find(FullName name) {
+        public User Find(UserName userName) {
             using (var con = new SqlConnection(Config.ConnectionString)) {
                 con.Open();
                 using (var com = con.CreateCommand()) {
-                    com.CommandText = "SELECT * FTOM t_user WHERE firstname = @firstname AND familyname = @familyname";
-                    com.Parameters.Add(new SqlParameter("@firstname", name.FirstName));
-                    com.Parameters.Add(new SqlParameter("@familyname", name.FamilyName));
+                    com.CommandText = "SELECT * FTOM t_user WHERE username = @username";
+                    com.Parameters.Add(new SqlParameter("@username", userName.Value));
                     var reader = com.ExecuteReader();
                     if (reader.Read()) {
                         var id = reader["id"] as string;
-                        var userid = new UserId(id);
-                        return new User(userid, name);
+                        var firstname = reader["firstname"] as string;
+                        var familyname = reader["familyname"] as string;
+
+                        return new User(
+                            new UserId(id),
+                            userName,
+                            new FullName(firstname, familyname)
+                        );
                     } else {
                         return null;
                     }
@@ -53,10 +62,12 @@ namespace ProductInfrastructure {
                         var id = reader["id"] as string;
                         var firstname = reader["firstname"] as string;
                         var familyname = reader["familyname"] as string;
-
-                        var userid = new UserId(id);
-                        var name = new FullName(firstname, familyname);
-                        var user = new User(userid, name);
+                        var username = reader["username"] as string;
+                        var user = new User(
+                            new UserId(id),
+                            new UserName(username),
+                            new FullName(firstname, familyname)
+                        );
                         results.Add(user);
                     }
                     return results;
@@ -79,9 +90,10 @@ namespace ProductInfrastructure {
                 using (var transaction = con.BeginTransaction())
                 using (var command = con.CreateCommand()) {
                     command.CommandText = isExist
-                        ? "UPDATE t_user SET firstname = @firstname, familyname = @familyname WHERE id = @id"
-                        : "INSERT INTO t_user VALUES(@id, @firstname, @familyname)";
+                        ? "UPDATE t_user SET username = @username, firstname = @firstname, familyname = @familyname WHERE id = @id"
+                        : "INSERT INTO t_user VALUES(@id, @username, @firstname, @familyname)";
                     command.Parameters.Add(new SqlParameter("@id", user.Id.Value));
+                    command.Parameters.Add(new SqlParameter("@firstname", user.UserName.Value));
                     command.Parameters.Add(new SqlParameter("@firstname", user.Name.FirstName));
                     command.Parameters.Add(new SqlParameter("@familyname", user.Name.FamilyName));
                     command.ExecuteNonQuery();
