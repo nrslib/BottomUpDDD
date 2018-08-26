@@ -8,7 +8,7 @@ namespace ProductInfrastructure {
             using (var con = new SqlConnection(Config.ConnectionString)) {
                 con.Open();
                 using (var com = con.CreateCommand()) {
-                    com.CommandText = "SELECT * FTOM t_user WHERE id = @id";
+                    com.CommandText = "SELECT * FROM t_user WHERE id = @id";
                     com.Parameters.Add(new SqlParameter("@id", id.Value));
                     var reader = com.ExecuteReader();
                     if (reader.Read()) {
@@ -31,7 +31,7 @@ namespace ProductInfrastructure {
             using (var con = new SqlConnection(Config.ConnectionString)) {
                 con.Open();
                 using (var com = con.CreateCommand()) {
-                    com.CommandText = "SELECT * FTOM t_user WHERE username = @username";
+                    com.CommandText = "SELECT * FROM t_user WHERE username = @username";
                     com.Parameters.Add(new SqlParameter("@username", userName.Value));
                     var reader = com.ExecuteReader();
                     if (reader.Read()) {
@@ -55,7 +55,7 @@ namespace ProductInfrastructure {
             using (var con = new SqlConnection(Config.ConnectionString)) {
                 con.Open();
                 using (var com = con.CreateCommand()) {
-                    com.CommandText = "SELECT * FTOM t_user";
+                    com.CommandText = "SELECT * FROM t_user";
                     var reader = com.ExecuteReader();
                     var results = new List<User>();
                     while (reader.Read()) {
@@ -81,7 +81,7 @@ namespace ProductInfrastructure {
 
                 bool isExist;
                 using (var com = con.CreateCommand()) {
-                    com.CommandText = "SELECT * FTOM t_user WHERE id = @id";
+                    com.CommandText = "SELECT * FROM t_user WHERE id = @id";
                     com.Parameters.Add(new SqlParameter("@id", user.Id.Value));
                     var reader = com.ExecuteReader();
                     isExist = reader.Read();
