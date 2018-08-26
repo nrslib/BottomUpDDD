@@ -22,7 +22,11 @@ public class Startup
     {
         services.AddMvc();
 
+        // Test
         services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+        // Product
+        // services.AddSingleton<IUserRepository, UserRepository>();
+
         services.AddTransient<UserApplicationService>();
     }
 

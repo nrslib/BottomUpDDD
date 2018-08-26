@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Domain.Application;
 using Domain.Domain.Users;
 using InMemoryInfrastructure;
@@ -30,6 +32,10 @@ namespace Domain.Tests.Users {
             var repository = new InMemoryUserRepository();
             var app = new UserApplicationService(repository);
             app.RegisterUser("ttaro", "taro", "tanaka");
+
+            var user = repository.Find(new UserName("ttaro"));
+            Assert.IsNotNull(user);
+            Assert.IsFalse(user.Id.Value == "1");
         }
     }
 }
