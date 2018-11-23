@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Domain.Domain.Users {
-    public class User {
+    public class User : IEquatable<User> {
         private readonly UserId id;
         private UserName userName;
         private FullName name;
@@ -29,13 +29,7 @@ namespace Domain.Domain.Users {
         public FullName Name {
             get { return name; }
         }
-
-        public bool EqualsEntity(User arg) {
-            if (ReferenceEquals(null, arg)) return false;
-            if (ReferenceEquals(this, arg)) return true;
-            return id.Equals(arg.id);
-        }
-
+        
         public void ChangeUserName(UserName newName) {
             if(newName == null) throw new ArgumentNullException(nameof(newName));
             userName = newName;
@@ -44,6 +38,26 @@ namespace Domain.Domain.Users {
         public void ChangeName(FullName newName) {
             if (newName == null) throw new ArgumentNullException(nameof(newName));
             this.name = newName;
+        }
+
+        public bool Equals(User other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(id, other.id);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((User) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (id != null ? id.GetHashCode() : 0);
         }
     }
 }

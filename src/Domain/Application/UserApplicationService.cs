@@ -35,6 +35,11 @@ namespace Domain.Application
             }
             var newUserName = new UserName(username);
             target.ChangeUserName(newUserName);
+            if(userService.IsDuplicated(target))
+            {
+                throw new Exception("重複しています");
+            }
+
             var newName = new FullName(firstname, familyname);
             target.ChangeName(newName);
             userRepository.Save(target);
